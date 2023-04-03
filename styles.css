@@ -16,7 +16,7 @@ main {
   border: 2px solid #333;
   max-width: 350px;
   margin: 100px auto;
-  padding: 1.5em;
+  padding: 1.25em;
   border-radius: 1rem;
   background-color: hsl(0, 0%, 90%);
 }
@@ -30,6 +30,25 @@ main {
   margin: 0 auto;
   height: 125px;
   background-color: #fff;
+  text-align: end;
+  padding: 0 1em;
+}
+
+.top-display {
+  height: 40%;
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  font-size: 1.75rem;
+}
+
+.bot-display {
+  height: 60%;
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow-x: clip;
 }
 
 .buttons {
@@ -50,6 +69,7 @@ main {
   font-family: 'League Spartan', sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
+  cursor: pointer;
 }
 
 #reset {
