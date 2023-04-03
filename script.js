@@ -19,11 +19,13 @@ for (let digit of digits) {
 }
 
 equal.addEventListener('click', () => {
-  if (!num2) return;
+  if (!num1) return;
   const result = operate(op, Number(num1), Number(num2));
   topDisplay.innerText = `${num1} ${opText} ${num2} =`;
   num1 = '';
-  num2 = Math.round((result + Number.EPSILON) * 1000) / 1000;
+  op = '';
+  opText = '';
+  num2 = String(Math.round((result + Number.EPSILON) * 1000) / 1000);
   botDisplay.innerText = num2;
 });
 
