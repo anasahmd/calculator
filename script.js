@@ -3,6 +3,8 @@ const botDisplay = document.getElementById('bd');
 const digits = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const equal = document.getElementById('equal');
+const reset = document.getElementById('reset');
+const del = document.getElementById('del');
 
 let num1 = '';
 let num2 = '';
@@ -18,22 +20,46 @@ for (let digit of digits) {
 
 equal.addEventListener('click', () => {
   if (!num2) return;
-  console.log(op, Number(num1), Number(num2));
-  console.log(operate(add, 5, 6));
   const result = operate(op, Number(num1), Number(num2));
   topDisplay.innerText = `${num1} ${opText} ${num2} =`;
-  botDisplay.innerText = Math.round((result + Number.EPSILON) * 1000) / 1000;
+  num1 = '';
+  num2 = Math.round((result + Number.EPSILON) * 1000) / 1000;
+  botDisplay.innerText = num2;
+});
+
+reset.addEventListener('click', () => {
+  num1 = '';
+  num2 = '';
+  op = '';
+  opText = '';
+  topDisplay.innerHTML = '';
+  botDisplay.innerHTML = '';
+});
+
+del.addEventListener('click', () => {
+  num2 = num2.slice(0, -1);
+  botDisplay.innerText = num2;
 });
 
 for (let operator of operators) {
   operator.addEventListener('click', () => {
+    // If there is no value, no operator changed
+    if (!num1 && !num2) return;
+
+    if (num2) {
+      if (!num1) {
+        num1 = num2;
+        num2 = '';
+      } else {
+        let result = operate(op, Number(num1), Number(num2));
+        num1 = Math.round((result + Number.EPSILON) * 1000) / 1000;
+        num2 = '';
+      }
+    }
     op = operator.dataset.val;
     opText = operator.innerText;
-    if (num1 && !num2) {
-      return;
-    }
-    num1 = num2;
-    num2 = '';
+    topDisplay.innerText = `${num1} ${operator.innerText} `;
+    botDisplay.innerText = '';
   });
 }
 
