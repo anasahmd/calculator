@@ -13,20 +13,34 @@ let opText = '';
 
 for (let digit of digits) {
   digit.addEventListener('click', () => {
+    if (digit.dataset.value == '.' && num2.includes('.')) {
+      return;
+    }
+    if (num2 == 'Infinity') {
+      return;
+    }
+    if (num2.length >= 10) {
+      return;
+    }
     num2 += digit.dataset.value;
     botDisplay.innerText = num2;
   });
 }
 
 equal.addEventListener('click', () => {
-  if (!num1) return;
+  if (!(num1 && num2)) return;
   const result = operate(op, Number(num1), Number(num2));
   topDisplay.innerText = `${num1} ${opText} ${num2} =`;
   num1 = '';
   op = '';
   opText = '';
-  num2 = String(Math.round((result + Number.EPSILON) * 1000) / 1000);
-  botDisplay.innerText = num2;
+  if (result > 9999999999) {
+    num2 = result;
+    botDisplay.innerText = result;
+  } else {
+    num2 = String(Math.round((result + Number.EPSILON) * 1000) / 1000);
+    botDisplay.innerText = num2;
+  }
 });
 
 reset.addEventListener('click', () => {
@@ -39,7 +53,11 @@ reset.addEventListener('click', () => {
 });
 
 del.addEventListener('click', () => {
-  num2 = num2.slice(0, -1);
+  if (num2 == 'Infinity') {
+    num2 = '';
+  } else {
+    num2 = num2.slice(0, -1);
+  }
   botDisplay.innerText = num2;
 });
 
@@ -82,8 +100,13 @@ const mul = (num1, num2) => {
 };
 
 const operate = (op, num1, num2) => {
-  if (op == 'sum') return add(num1, num2);
-  if (op == 'sub') return sub(num1, num2);
-  if (op == 'div') return div(num1, num2);
-  if (op == 'mul') return mul(num1, num2);
+  let value = 0;
+  if (op == 'sum') value = add(num1, num2);
+  if (op == 'sub') value = sub(num1, num2);
+  if (op == 'div') value = div(num1, num2);
+  if (op == 'mul') value = mul(num1, num2);
+  if (value > 9999999999) {
+    return value.toExponential(4);
+  }
+  return value;
 };

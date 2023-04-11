@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap');
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: hsl(0, 0%, 93%);
   font-family: 'League Spartan', sans-serif;
@@ -14,7 +20,7 @@ main {
 
 .calculator {
   border: 2px solid #333;
-  max-width: 350px;
+  max-width: 375px;
   margin: 100px auto;
   padding: 1.25em;
   border-radius: 1rem;
@@ -87,4 +93,15 @@ main {
 #del {
   background-color: hsl(185, 42%, 37%);
   color: #fff;
+}
+
+@media screen and (max-width: 480px) {
+  .top-display {
+    font-size: 1.5rem;
+  }
+
+  .bot-display {
+    height: 60%;
+    font-size: 2.5rem;
+  }
 }
